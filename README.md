@@ -52,7 +52,7 @@ enable_swag(
 )
 ```
 
-You can speed online inference up significantly by enabling MiniSWAG:
+You can speed online inference up by limiting the number of samples used to update batchnorm parameters:
 
 ```python
 from afterglow import enable_swag
@@ -62,7 +62,7 @@ enable_swag(
     update_period_in_iters=len(train_dataloader),
     max_cols=20,
     dataloader_for_batchnorm=train_dataloader,
-    num_bn_batches_per_sample=1, # now we'll only use 1 minibatch for the bn update
+    num_datapoints_for_bn_update=100, # now we'll only use 100 examples fo the bn update
 )
 ```
 
