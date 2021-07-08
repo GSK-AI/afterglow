@@ -1,0 +1,37 @@
+afterglow.enable 
+========================
+
+Submodules
+----------
+
+afterglow.enable.base module
+----------------------------
+
+.. automodule:: afterglow.enable.base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+afterglow.enable.offline module
+-------------------------------
+
+.. automodule:: afterglow.enable.offline
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+afterglow.enable.online module
+------------------------------
+
+.. automodule:: afterglow.enable.online
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: afterglow.enable
+   :members:
+   :undoc-members:
+   :show-inheritance:
