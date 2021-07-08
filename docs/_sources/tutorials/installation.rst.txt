@@ -1,6 +1,0 @@
-Installation
-=============
-
-Afterglow supports :code:`python>3.6` and can be installed through pip via::
-
-    pip install afterglow
