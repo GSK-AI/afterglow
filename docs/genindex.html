@@ -30,6 +30,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -90,16 +91,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/quick_start.html">Quickstart tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/quick_start.html#problem-setup-and-dataset">Problem setup and dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/quick_start.html#training-a-model">Training a model</a></li>
 </ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Package Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules/enable.html">afterglow.enable</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules/enable.html#submodules">Submodules</a></li>
@@ -111,6 +107,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules/trackers.html">afterglow.trackers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#module-afterglow.trackers.batchnorm">afterglow.trackers.batchnorm module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#module-afterglow.trackers.trackers">afterglow.trackers.trackers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#module-afterglow.trackers">Module contents</a></li>
 </ul>
@@ -191,6 +188,7 @@
  | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -217,8 +215,6 @@
         <li><a href="modules/enable.html#module-afterglow.enable.offline">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     afterglow.enable.online
 
@@ -226,11 +222,20 @@
         <li><a href="modules/enable.html#module-afterglow.enable.online">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     afterglow.trackers
 
       <ul>
         <li><a href="modules/trackers.html#module-afterglow.trackers">module</a>
+</li>
+      </ul></li>
+      <li>
+    afterglow.trackers.batchnorm
+
+      <ul>
+        <li><a href="modules/trackers.html#module-afterglow.trackers.batchnorm">module</a>
 </li>
       </ul></li>
       <li>
@@ -290,6 +295,8 @@
 </li>
         <li><a href="modules/trackers.html#module-afterglow.trackers">afterglow.trackers</a>
 </li>
+        <li><a href="modules/trackers.html#module-afterglow.trackers.batchnorm">afterglow.trackers.batchnorm</a>
+</li>
         <li><a href="modules/trackers.html#module-afterglow.trackers.trackers">afterglow.trackers.trackers</a>
 </li>
       </ul></li>
@@ -305,9 +312,9 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.predictive_sample">predictive_sample() (afterglow.trackers.trackers.SWAGTracker method)</a>
+      <li><a href="modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.predictive_samples">predictive_samples() (afterglow.trackers.trackers.SWAGTracker method)</a>
 </li>
-      <li><a href="modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.predictive_sample_on_dataloader">predictive_sample_on_dataloader() (afterglow.trackers.trackers.SWAGTracker method)</a>
+      <li><a href="modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.predictive_samples_on_dataloader">predictive_samples_on_dataloader() (afterglow.trackers.trackers.SWAGTracker method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -322,6 +329,14 @@
       <li><a href="modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.save">save() (afterglow.trackers.trackers.SWAGTracker method)</a>
 </li>
       <li><a href="modules/trackers.html#afterglow.trackers.trackers.SWAGTracker">SWAGTracker (class in afterglow.trackers.trackers)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/trackers.html#afterglow.trackers.batchnorm.update_bn">update_bn() (in module afterglow.trackers.batchnorm)</a>
 </li>
   </ul></td>
 </tr></table>

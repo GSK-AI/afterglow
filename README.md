@@ -62,8 +62,8 @@ enable_swag(
     update_period_in_iters=len(train_dataloader),
     max_cols=20,
     dataloader_for_batchnorm=train_dataloader,
-    num_datapoints_for_bn_update=10, # now we'll only use 10 examples fo the bn update
+    num_datapoints_for_bn_update=10, # now we'll only use 10 examples for the bn update
 )
 ```
 
-See the documentation, and the example app in `/example`, for more!
+See the [documentation](https://gsk-ai.github.io/afterglow/), and the example app in `/example`, for more!

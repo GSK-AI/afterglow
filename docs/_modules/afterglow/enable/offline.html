@@ -30,6 +30,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -90,16 +91,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/quick_start.html">Quickstart tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#problem-setup-and-dataset">Problem setup and dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#training-a-model">Training a model</a></li>
 </ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Package Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules/enable.html">afterglow.enable</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#submodules">Submodules</a></li>
@@ -111,6 +107,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules/trackers.html">afterglow.trackers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers.batchnorm">afterglow.trackers.batchnorm module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers.trackers">afterglow.trackers.trackers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers">Module contents</a></li>
 </ul>
@@ -181,17 +178,18 @@
            <div itemprop="articleBody">
             
   <h1>Source code for afterglow.enable.offline</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">parse</span> <span class="kn">import</span> <span class="n">parse</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_enable_tracking</span><span class="p">,</span> <span class="n">_create_swag_buffers</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">validate_arguments</span><span class="p">,</span> <span class="n">StrictInt</span><span class="p">,</span> <span class="n">conint</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Type</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">..trackers</span> <span class="kn">import</span> <span class="n">SWAGTracker</span><span class="p">,</span> <span class="n">CheckpointTracker</span>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">parse</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">StrictInt</span><span class="p">,</span> <span class="n">conint</span><span class="p">,</span> <span class="n">validate_arguments</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="kn">from</span> <span class="nn">..trackers</span> <span class="kn">import</span> <span class="n">CheckpointTracker</span><span class="p">,</span> <span class="n">SWAGTracker</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_create_swag_buffers</span><span class="p">,</span> <span class="n">_enable_tracking</span>
+<span class="kn">from</span> <span class="nn">.._types</span> <span class="kn">import</span> <span class="n">SwagEnabledModule</span>
 
 <span class="n">_IntGreaterThanOne</span> <span class="o">=</span> <span class="n">conint</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -206,11 +204,12 @@
     <span class="n">module</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
     <span class="n">max_cols</span><span class="p">:</span> <span class="n">_IntGreaterThanOne</span><span class="p">,</span>
     <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">start_iteration</span><span class="p">:</span> <span class="n">StrictInt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="n">checkpoint_pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;*.ckpt&quot;</span><span class="p">,</span>
     <span class="n">checkpoint_sort_key</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">_iter_from_filepath</span><span class="p">,</span>
     <span class="n">dataloader_for_batchnorm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">num_bn_batches_per_sample</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-<span class="p">):</span>
+    <span class="n">num_datapoints_for_bn_update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SwagEnabledModule</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Equips a model with SWAG-based uncertainty estimation by reconstructing</span>
 <span class="sd">    the training trajectory from a series of saved checkpoints. Useful if you</span>
 <span class="sd">    have non-SWAG-enabled checkpoints saved for an expensive-to-train model</span>
@@ -224,9 +223,9 @@
 <span class="sd">        enable_swag_from_checkpoints(</span>
 <span class="sd">            my_model,</span>
 <span class="sd">            max_cols=10,</span>
-<span class="sd">            checkpoint_path=&quot;./checkpoints&quot;,</span>
+<span class="sd">            checkpoint_dir=&quot;./checkpoints&quot;,</span>
 <span class="sd">            checkpoint_pattern=&quot;*.pt&quot;,</span>
-<span class="sd">            checkpoint_sort_key=lambda x: int(x[:len(&quot;.pt&quot;)]),</span>
+<span class="sd">            checkpoint_sort_key=lambda x: int(str(x.stem)),</span>
 <span class="sd">        ) # assuming your checkpoints are of the form &quot;./checkpoints/&lt;epoch-num&gt;.pt&quot;</span>
 <span class="sd">        my_model.trajectory_tracker.predict_uncertainty(data)</span>
 
@@ -238,6 +237,7 @@
 <span class="sd">            for details.</span>
 <span class="sd">        checkpoint_dir: Directory where the checkpoints from the training run</span>
 <span class="sd">            you want to apply SWAG to are found.</span>
+<span class="sd">        start_iteration: iteration from which to begin recording snapshots.</span>
 <span class="sd">        checkpoint_pattern: A glob pattern that, when applied to :code:`checkpoint_dir`,</span>
 <span class="sd">            will select the checkpoints you want to include.</span>
 <span class="sd">        checkpoint_sort_key: Function mapping from checkpoint filenames to a number,</span>
@@ -251,18 +251,21 @@
 <span class="sd">            the same as those in :code:`torch.optim.swa_utils.update_bn`: it&#39;s</span>
 <span class="sd">            assumed that iterating produces a sequence of (input_batch, label_batch)</span>
 <span class="sd">            tuples.</span>
-<span class="sd">        num_bn_batches_per_sample: Number of minibatches to use for the batchnorm</span>
-<span class="sd">            update. If :code:`None`, we use the whole dataset, as in the original SWAG</span>
-<span class="sd">            paper. However, as shown in the MiniSWAG paper, it&#39;s almost always</span>
-<span class="sd">            better to set this value to 1 (the default) and increase the number of</span>
-<span class="sd">            SWAG samples drawn.</span>
+<span class="sd">        num_datapoints_for_bn_update: Number of training example to use to perfom the</span>
+<span class="sd">            batchnorm update.</span>
+<span class="sd">            If :code:`None`, we use the whole dataset, as in the original SWAG</span>
+<span class="sd">            paper. It&#39;s better to better to set this value to 1 and increase the</span>
+<span class="sd">            number of SWAG samples drawn when predicting in online mode</span>
+<span class="sd">            (one example at a time) rather than in batch mode.</span>
+<span class="sd">            If this is not None, dataloader_for_batchnorm must be</span>
+<span class="sd">            initialised with :code:`shuffle=True`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tracker</span> <span class="o">=</span> <span class="n">SWAGTracker</span><span class="p">(</span>
         <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
         <span class="n">start_iteration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">update_period_in_iters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">dataloader_for_batchnorm</span><span class="o">=</span><span class="n">dataloader_for_batchnorm</span><span class="p">,</span>
-        <span class="n">num_bn_batches_per_sample</span><span class="o">=</span><span class="n">num_bn_batches_per_sample</span><span class="p">,</span>
+        <span class="n">num_datapoints_for_bn_update</span><span class="o">=</span><span class="n">num_datapoints_for_bn_update</span><span class="p">,</span>
         <span class="n">max_cols</span><span class="o">=</span><span class="n">max_cols</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">_enable_tracking</span><span class="p">(</span>
@@ -270,8 +273,13 @@
     <span class="p">)</span>
     <span class="n">_create_swag_buffers</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">max_cols</span><span class="p">)</span>
     <span class="n">_populate_uncertainty_buffers_from_checkpoints</span><span class="p">(</span>
-        <span class="n">module</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="p">,</span> <span class="n">checkpoint_pattern</span><span class="p">,</span> <span class="n">checkpoint_sort_key</span>
-    <span class="p">)</span></div>
+        <span class="n">module</span><span class="p">,</span>
+        <span class="n">checkpoint_dir</span><span class="p">,</span>
+        <span class="n">checkpoint_pattern</span><span class="p">,</span>
+        <span class="n">checkpoint_sort_key</span><span class="p">,</span>
+        <span class="n">start_iteration</span><span class="o">=</span><span class="n">start_iteration</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">module</span></div>
 
 
 <span class="k">def</span> <span class="nf">_populate_uncertainty_buffers_from_checkpoints</span><span class="p">(</span>
@@ -279,11 +287,12 @@
     <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
     <span class="n">checkpoint_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">checkpoint_sort_key</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">float</span><span class="p">],</span>
+    <span class="n">start_iteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span>
     <span class="n">checkpoints</span> <span class="o">=</span> <span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">checkpoint_pattern</span><span class="p">)</span>
     <span class="n">checkpoints_in_order</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">checkpoints</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">checkpoint_sort_key</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">checkpoint</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">checkpoints_in_order</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">checkpoint</span> <span class="ow">in</span> <span class="n">checkpoints_in_order</span><span class="p">[</span><span class="n">start_iteration</span><span class="p">:]:</span>
         <span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">trajectory_tracker</span><span class="o">.</span><span class="n">_update_tracked_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">trajectory_tracker</span><span class="o">.</span><span class="n">_update_uncertainty_buffers</span><span class="p">()</span>

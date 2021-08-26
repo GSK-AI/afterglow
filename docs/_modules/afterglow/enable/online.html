@@ -30,6 +30,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -90,16 +91,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/quick_start.html">Quickstart tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#problem-setup-and-dataset">Problem setup and dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#training-a-model">Training a model</a></li>
 </ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Package Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules/enable.html">afterglow.enable</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#submodules">Submodules</a></li>
@@ -111,6 +107,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules/trackers.html">afterglow.trackers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers.batchnorm">afterglow.trackers.batchnorm module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers.trackers">afterglow.trackers.trackers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers">Module contents</a></li>
 </ul>
@@ -181,15 +178,16 @@
            <div itemprop="articleBody">
             
   <h1>Source code for afterglow.enable.online</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_enable_tracking</span><span class="p">,</span> <span class="n">_create_swag_buffers</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">StrictInt</span><span class="p">,</span> <span class="n">validate_arguments</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">validate_arguments</span><span class="p">,</span> <span class="n">StrictInt</span><span class="p">,</span> <span class="n">conint</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
 <span class="kn">from</span> <span class="nn">..trackers</span> <span class="kn">import</span> <span class="n">SWAGTracker</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_create_swag_buffers</span><span class="p">,</span> <span class="n">_enable_tracking</span>
 
-
-<span class="n">_IntGreaterThanOne</span> <span class="o">=</span> <span class="n">conint</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.._types</span> <span class="kn">import</span> <span class="n">_IntGreaterThanOne</span><span class="p">,</span> <span class="n">SwagEnabledModule</span>
 
 
 <div class="viewcode-block" id="enable_swag"><a class="viewcode-back" href="../../../modules/enable.html#afterglow.enable.online.enable_swag">[docs]</a><span class="nd">@validate_arguments</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pre&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;arbitrary_types_allowed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
@@ -199,8 +197,8 @@
     <span class="n">max_cols</span><span class="p">:</span> <span class="n">_IntGreaterThanOne</span><span class="p">,</span>
     <span class="n">update_period_in_iters</span><span class="p">:</span> <span class="n">StrictInt</span><span class="p">,</span>
     <span class="n">dataloader_for_batchnorm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">num_bn_batches_per_sample</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
+    <span class="n">num_datapoints_for_bn_update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SwagEnabledModule</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Enables online trajectory tracking. Models passed to this function</span>
 <span class="sd">    and subsequently trained will update SWAG buffers during training, and</span>
 <span class="sd">    will be equiped with the ability to sample from the SWAG posterior</span>
@@ -235,27 +233,28 @@
 <span class="sd">            the same as those in :code:`torch.optim.swa_utils.update_bn`: it&#39;s</span>
 <span class="sd">            assumed that iterating produces a sequence of (input_batch, label_batch)</span>
 <span class="sd">            tuples.</span>
-<span class="sd">        num_bn_batches_per_sample: Number of minibatches to use for the batchnorm</span>
-<span class="sd">            update. If :code:`None`, we use the whole dataset, as in the original SWAG</span>
-<span class="sd">            paper. As shown in the MiniSWAG paper, it&#39;s better to better to set</span>
-<span class="sd">            this value to 1 and increase the number of SWAG samples drawn when</span>
-<span class="sd">            predicting in online mode (one example at a time) rather than in</span>
-<span class="sd">            batch mode. If this is larger than the number of batches in the</span>
-<span class="sd">            dataloader, the entire dataset is sampled. If this is not None,</span>
-<span class="sd">            dataloader_for_batchnorm must be initialised with :code:`shuffle=True`</span>
+<span class="sd">        num_datapoints_for_bn_update: Number of training example to use to perfom the</span>
+<span class="sd">            batchnorm update.</span>
+<span class="sd">            If :code:`None`, we use the whole dataset, as in the original SWAG</span>
+<span class="sd">            paper. It&#39;s better to better to set this value to 1 and increase the</span>
+<span class="sd">            number of SWAG samples drawn when predicting in online mode</span>
+<span class="sd">            (one example at a time) rather than in batch mode.</span>
+<span class="sd">            If this is not None, dataloader_for_batchnorm must be</span>
+<span class="sd">            initialised with :code:`shuffle=True`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tracker</span> <span class="o">=</span> <span class="n">SWAGTracker</span><span class="p">(</span>
         <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
         <span class="n">start_iteration</span><span class="o">=</span><span class="n">start_iteration</span><span class="p">,</span>
         <span class="n">update_period_in_iters</span><span class="o">=</span><span class="n">update_period_in_iters</span><span class="p">,</span>
         <span class="n">dataloader_for_batchnorm</span><span class="o">=</span><span class="n">dataloader_for_batchnorm</span><span class="p">,</span>
-        <span class="n">num_bn_batches_per_sample</span><span class="o">=</span><span class="n">num_bn_batches_per_sample</span><span class="p">,</span>
+        <span class="n">num_datapoints_for_bn_update</span><span class="o">=</span><span class="n">num_datapoints_for_bn_update</span><span class="p">,</span>
         <span class="n">max_cols</span><span class="o">=</span><span class="n">max_cols</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">_enable_tracking</span><span class="p">(</span>
         <span class="n">tracker</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">_create_swag_buffers</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">max_cols</span><span class="p">)</span></div>
+    <span class="n">_create_swag_buffers</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">max_cols</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">module</span></div>
 </pre></div>
 
            </div>

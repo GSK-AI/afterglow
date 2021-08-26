@@ -30,6 +30,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -91,16 +92,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/quick_start.html">Quickstart tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/quick_start.html#problem-setup-and-dataset">Problem setup and dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/quick_start.html#training-a-model">Training a model</a></li>
 </ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Package Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules/enable.html">afterglow.enable</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules/enable.html#submodules">Submodules</a></li>
@@ -112,6 +108,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules/trackers.html">afterglow.trackers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#module-afterglow.trackers.batchnorm">afterglow.trackers.batchnorm module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#module-afterglow.trackers.trackers">afterglow.trackers.trackers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/trackers.html#module-afterglow.trackers">Module contents</a></li>
 </ul>
@@ -198,18 +195,16 @@ With afterglow, the following line will change code that trains a normal neural 
 </div>
 <p>The core method used by afterglow, known as <a class="reference external" href="https://arxiv.org/abs/1902.02476/">SWAG</a>, has been shown to produce high-quality uncertainty estimates across a range of models and tasks. It works by keeping track of the
 model’s parameters during training, and so has minimal overhead in terms of time complexity.</p>
-<p>Afterglow comes with MiniSWAG, a technique developed at <a class="reference external" href="https://gsk.ai/">GSK.ai</a> which provides a significant speedup for online inference.
-The package has been tested against a wide variety of models and supports distributed training.</p>
-<p>To get up-and-running with afterglow, see the quickstart tutorial. We also provide a computer vision example application <a class="reference external" href="https://mygithub.gsk.com/ff111184/uncertainty-package-public/tree/master/examples/">here</a>.</p>
+<p>The package has been tested against a wide variety of models and supports distributed training.</p>
+<p>To get up-and-running with afterglow, see the quickstart tutorial. We also provide a computer vision example application <a class="reference external" href="https://mygithub.gsk.com/ff111184/uncertainty-package-public/tree/master/example/">here</a>.</p>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials/quick_start.html">Quickstart tutorial</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Package Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules/enable.html">afterglow.enable</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules/trackers.html">afterglow.trackers</a></li>
