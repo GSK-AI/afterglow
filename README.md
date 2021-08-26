@@ -66,4 +66,4 @@ enable_swag(
 )
 ```
 
-See the documentation, and the example app in `/example`, for more!
+See the [documentation](https://gsk-ai.github.io/afterglow/), and the example app in `/example`, for more!
