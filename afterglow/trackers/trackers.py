@@ -204,15 +204,15 @@ class SWAGTracker:
                 *args, num_samples=1, dropout=dropout, device=device, **kwargs
             )[0]
             if isinstance(prediction, tuple):
-                mean, var = self.accumulate_mean_and_var_for_tuple(
+                mean, var = self._accumulate_mean_and_var_for_tuple(
                     prediction, mean, var, i
                 )
             elif isinstance(prediction, dict):
-                mean, var = self.accumulate_mean_and_var_for_dict(
+                mean, var = self._accumulate_mean_and_var_for_dict(
                     prediction, mean, var, i, prediction_key
                 )
             else:
-                mean, var = self.accumulate_mean_and_var_for_scalar(
+                mean, var = self._accumulate_mean_and_var_for_scalar(
                     prediction, mean, var, i
                 )
         if isinstance(mean, tuple):
@@ -220,28 +220,28 @@ class SWAGTracker:
         self.module.load_state_dict(origial_state_dict)
         return mean, var.sqrt()
 
-    def accumulate_mean_and_var_for_tuple(self, prediction, mean, var, step):
+    def _accumulate_mean_and_var_for_tuple(self, prediction, mean, var, step):
         if mean is None:
             mean = [0 for _ in prediction]
         if var is None:
             var = [0 for _ in prediction]
 
         new_stats_per_channel = [
-            self.accumulate_mean_and_var_for_scalar(
+            self._accumulate_mean_and_var_for_scalar(
                 prediction[i], mean[i], var[i], step
             )
             for i in range(len(prediction))
         ]
         return zip(*new_stats_per_channel)
 
-    def accumulate_mean_and_var_for_dict(
+    def _accumulate_mean_and_var_for_dict(
         self, prediction, mean, var, step, prediciton_key
     ):
         prediction = prediction[prediciton_key]
-        return self.accumulate_mean_and_var_for_scalar(prediction, mean, var, step)
+        return self._accumulate_mean_and_var_for_scalar(prediction, mean, var, step)
 
     @staticmethod
-    def accumulate_mean_and_var_for_scalar(prediction, mean, var, step):
+    def _accumulate_mean_and_var_for_scalar(prediction, mean, var, step):
         if mean is None:
             mean = 0
         if var is None:
