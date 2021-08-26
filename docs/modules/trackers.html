@@ -54,12 +54,9 @@
           
 
           
-            <a href="../index.html">
+            <a href="../index.html" class="icon icon-home"> afterglow
           
 
-          
-            
-            <img src="../_static/logo.svg" class="logo" alt="Logo"/>
           
           </a>
 
@@ -108,6 +105,7 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">afterglow.trackers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-afterglow.trackers.batchnorm">afterglow.trackers.batchnorm module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-afterglow.trackers.trackers">afterglow.trackers.trackers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-afterglow.trackers">Module contents</a></li>
 </ul>
@@ -184,6 +182,47 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-afterglow.trackers.batchnorm">
+<span id="afterglow-trackers-batchnorm-module"></span><h2>afterglow.trackers.batchnorm module<a class="headerlink" href="#module-afterglow.trackers.batchnorm" title="Permalink to this headline">¶</a></h2>
+<p>Adapted from torch.optim.swa_utils</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="afterglow.trackers.batchnorm.update_bn">
+<span class="sig-prename descclassname"><span class="pre">afterglow.trackers.batchnorm.</span></span><span class="sig-name descname"><span class="pre">update_bn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.utils.data.dataloader.DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">torch.nn.modules.module.Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">torch.device</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_datapoints</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/afterglow/trackers/batchnorm.html#update_bn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#afterglow.trackers.batchnorm.update_bn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates BatchNorm running_mean, running_var buffers in the model.</p>
+<p>It performs one pass over data in <cite>loader</cite> to estimate the activation
+statistics for BatchNorm layers in the model.
+:param loader: dataset loader to compute the</p>
+<blockquote>
+<div><p>activation statistics on. Each data batch should be either a
+tensor, or a list/tuple whose first element is a tensor
+containing data.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – model for which we seek to update BatchNorm
+statistics.</p></li>
+<li><p><strong>device</strong> – If set, data will be transferred to
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">device</span></code> before being passed into <code class="xref py py-attr docutils literal notranslate"><span class="pre">model</span></code>.</p></li>
+<li><p><strong>num_datapoints</strong> – number of examples to use to perform the update.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">loader</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="o">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">swa_utils</span><span class="o">.</span><span class="n">update_bn</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <cite>update_bn</cite> utility assumes that each data batch in <code class="xref py py-attr docutils literal notranslate"><span class="pre">loader</span></code>
+is either a tensor or a list or tuple of tensors; in the latter case it
+is assumed that <code class="xref py py-meth docutils literal notranslate"><span class="pre">model.forward()</span></code> should be called on the first
+element of the list or tuple corresponding to the data batch.</p>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="module-afterglow.trackers.trackers">
 <span id="afterglow-trackers-trackers-module"></span><h2>afterglow.trackers.trackers module<a class="headerlink" href="#module-afterglow.trackers.trackers" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
@@ -239,21 +278,6 @@ initialised with <code class="code docutils literal notranslate"><span class="pr
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_dict">
-<span class="sig-name descname"><span class="pre">accumulate_mean_and_var_for_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediciton_key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/afterglow/trackers/trackers.html#SWAGTracker.accumulate_mean_and_var_for_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_dict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_scalar">
-<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">accumulate_mean_and_var_for_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/afterglow/trackers/trackers.html#SWAGTracker.accumulate_mean_and_var_for_scalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_scalar" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_tuple">
-<span class="sig-name descname"><span class="pre">accumulate_mean_and_var_for_tuple</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prediction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/afterglow/trackers/trackers.html#SWAGTracker.accumulate_mean_and_var_for_tuple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_tuple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="afterglow.trackers.trackers.SWAGTracker.predict_uncertainty">
 <span class="sig-name descname"><span class="pre">predict_uncertainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pydantic.types.StrictInt</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/afterglow/trackers/trackers.html#SWAGTracker.predict_uncertainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#afterglow.trackers.trackers.SWAGTracker.predict_uncertainty" title="Permalink to this definition">¶</a></dt>

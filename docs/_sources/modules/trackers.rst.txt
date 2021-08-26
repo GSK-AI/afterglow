@@ -4,6 +4,14 @@ afterglow.trackers
 Submodules
 ----------
 
+afterglow.trackers.batchnorm module
+-----------------------------------
+
+.. automodule:: afterglow.trackers.batchnorm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 afterglow.trackers.trackers module
 ----------------------------------
 

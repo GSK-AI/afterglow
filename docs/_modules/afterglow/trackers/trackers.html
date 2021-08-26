@@ -53,12 +53,9 @@
           
 
           
-            <a href="../../../index.html">
+            <a href="../../../index.html" class="icon icon-home"> afterglow
           
 
-          
-            
-            <img src="../../../_static/logo.svg" class="logo" alt="Logo"/>
           
           </a>
 
@@ -107,6 +104,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules/trackers.html">afterglow.trackers</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers.batchnorm">afterglow.trackers.batchnorm module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers.trackers">afterglow.trackers.trackers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers">Module contents</a></li>
 </ul>
@@ -383,15 +381,15 @@
                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="n">dropout</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
             <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-                <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accumulate_mean_and_var_for_tuple</span><span class="p">(</span>
+                <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate_mean_and_var_for_tuple</span><span class="p">(</span>
                     <span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">i</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-                <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accumulate_mean_and_var_for_dict</span><span class="p">(</span>
+                <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate_mean_and_var_for_dict</span><span class="p">(</span>
                     <span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">prediction_key</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">accumulate_mean_and_var_for_scalar</span><span class="p">(</span>
+                <span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate_mean_and_var_for_scalar</span><span class="p">(</span>
                     <span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">i</span>
                 <span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -399,35 +397,35 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">origial_state_dict</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="SWAGTracker.accumulate_mean_and_var_for_tuple"><a class="viewcode-back" href="../../../modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_tuple">[docs]</a>    <span class="k">def</span> <span class="nf">accumulate_mean_and_var_for_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_accumulate_mean_and_var_for_tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mean</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">prediction</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">prediction</span><span class="p">]</span>
 
         <span class="n">new_stats_per_channel</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">accumulate_mean_and_var_for_scalar</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate_mean_and_var_for_scalar</span><span class="p">(</span>
                 <span class="n">prediction</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">mean</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">var</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">step</span>
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prediction</span><span class="p">))</span>
         <span class="p">]</span>
-        <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">new_stats_per_channel</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">new_stats_per_channel</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SWAGTracker.accumulate_mean_and_var_for_dict"><a class="viewcode-back" href="../../../modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_dict">[docs]</a>    <span class="k">def</span> <span class="nf">accumulate_mean_and_var_for_dict</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">_accumulate_mean_and_var_for_dict</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">prediciton_key</span>
     <span class="p">):</span>
         <span class="n">prediction</span> <span class="o">=</span> <span class="n">prediction</span><span class="p">[</span><span class="n">prediciton_key</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">accumulate_mean_and_var_for_scalar</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accumulate_mean_and_var_for_scalar</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SWAGTracker.accumulate_mean_and_var_for_scalar"><a class="viewcode-back" href="../../../modules/trackers.html#afterglow.trackers.trackers.SWAGTracker.accumulate_mean_and_var_for_scalar">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">accumulate_mean_and_var_for_scalar</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_accumulate_mean_and_var_for_scalar</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mean</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mean</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="n">var</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">var</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">mean</span> <span class="o">=</span> <span class="n">step</span> <span class="o">/</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">prediction</span> <span class="o">/</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">var</span> <span class="o">=</span> <span class="n">step</span> <span class="o">/</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">var</span> <span class="o">+</span> <span class="p">((</span><span class="n">prediction</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span></div>
+        <span class="k">return</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span>
 
     <span class="k">def</span> <span class="nf">_mean_and_std_of_predictive_samples</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
