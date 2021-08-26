@@ -334,7 +334,9 @@ def test_tracker_updates_batchnorm(num_datapoints_for_bn_update):
 
 def test_saving_and_loading_swag_checkpoint(tmp_path):
     model = Net()
-    enable_swag(module=model, start_iteration=2, update_period_in_iters=2, max_cols=2)
+    model = enable_swag(
+        module=model, start_iteration=2, update_period_in_iters=2, max_cols=2
+    )
     train_func(model, 20)
     pre_save_params = dict(model.named_parameters())
     model.trajectory_tracker.save(tmp_path / "swag.ckpt")

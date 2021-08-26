@@ -40,7 +40,9 @@ def _create_swag_buffers(instance: nn.Module, max_cols: _IntGreaterThanOne):
         instance.register_buffer(f"{name}_mean", deepcopy(parameter))
         instance.register_buffer(f"{name}_squared_mean", torch.zeros_like(parameter))
         instance.register_buffer(
-            f"{name}_D_block", torch.zeros((max_cols, *parameter.shape))
+            f"{name}_D_block",
+            torch.zeros((max_cols, *parameter.shape), device=parameter.device),
+
         )
     instance.register_buffer("num_snapshots_tracked", torch.tensor(0, dtype=int))
 

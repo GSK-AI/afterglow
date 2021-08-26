@@ -30,6 +30,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -90,16 +91,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials/installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/quick_start.html">Quickstart tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#problem-setup-and-dataset">Problem setup and dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#training-a-model">Training a model</a></li>
 </ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Package Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">Package Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules/enable.html">afterglow.enable</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#submodules">Submodules</a></li>
@@ -181,15 +177,17 @@
            <div itemprop="articleBody">
             
   <h1>Source code for afterglow.enable.base</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
-<span class="kn">from</span> <span class="nn">..trackers</span> <span class="kn">import</span> <span class="n">SWAGTracker</span><span class="p">,</span> <span class="n">CheckpointTracker</span>
+<span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">validate_arguments</span><span class="p">,</span> <span class="n">StrictInt</span><span class="p">,</span> <span class="n">conint</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">StrictInt</span><span class="p">,</span> <span class="n">conint</span><span class="p">,</span> <span class="n">validate_arguments</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="kn">from</span> <span class="nn">..trackers</span> <span class="kn">import</span> <span class="n">CheckpointTracker</span><span class="p">,</span> <span class="n">SWAGTracker</span>
 
 <span class="n">_IntGreaterThanOne</span> <span class="o">=</span> <span class="n">conint</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">TrajectoryTracker</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">CheckpointTracker</span><span class="p">,</span> <span class="n">SWAGTracker</span><span class="p">]</span>
@@ -199,9 +197,10 @@
     <span class="n">tracker</span><span class="p">:</span> <span class="n">TrajectoryTracker</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">tracker</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">training</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeWarning</span><span class="p">(</span>
+        <span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;enabling trajectory tracking for a model in eval mode. &quot;</span>
-            <span class="s2">&quot;Trajectory will NOT be tracked unless you do model.train() first.&quot;</span>
+            <span class="s2">&quot;Trajectory will NOT be tracked unless you do model.train() first.&quot;</span><span class="p">,</span>
+            <span class="ne">RuntimeWarning</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="n">tracker</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">trajectory_tracker</span> <span class="o">=</span> <span class="n">tracker</span>
     <span class="n">tracker</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">trajectory_tracking_enabled</span> <span class="o">=</span> <span class="kc">True</span>
@@ -220,7 +219,9 @@
         <span class="n">instance</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_mean&quot;</span><span class="p">,</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">parameter</span><span class="p">))</span>
         <span class="n">instance</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_squared_mean&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">parameter</span><span class="p">))</span>
         <span class="n">instance</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_D_block&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">max_cols</span><span class="p">,</span> <span class="o">*</span><span class="n">parameter</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">_D_block&quot;</span><span class="p">,</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">max_cols</span><span class="p">,</span> <span class="o">*</span><span class="n">parameter</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">parameter</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
+
         <span class="p">)</span>
     <span class="n">instance</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span><span class="s2">&quot;num_snapshots_tracked&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">))</span>
 
@@ -230,7 +231,7 @@
     <span class="n">base_module</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
     <span class="n">path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
     <span class="n">dataloader_for_batchnorm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">num_bn_batches_per_sample</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_datapoints_for_bn_update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Loads the state dict of a SWAG-enabled model that was saved via</span>
 <span class="sd">    :code:`model.trajectory_tracker.save` into :code:`base_model` after enabling</span>
@@ -240,7 +241,7 @@
 <span class="sd">        module: An instance of the module to load the swag checkpoint into.</span>
 <span class="sd">        path: Path to the checkpoint</span>
 <span class="sd">        dataloader_for_batchnorm: see `enable_swag_from_checkpoints`.</span>
-<span class="sd">        num_bn_batches_per_sample: see `enable_swag_from_checkpoints`.</span>
+<span class="sd">        num_datapoints_for_bn_update: see `enable_swag_from_checkpoints`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">checkpoint_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -249,7 +250,7 @@
         <span class="n">start_iteration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">update_period_in_iters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">dataloader_for_batchnorm</span><span class="o">=</span><span class="n">dataloader_for_batchnorm</span><span class="p">,</span>
-        <span class="n">num_bn_batches_per_sample</span><span class="o">=</span><span class="n">num_bn_batches_per_sample</span><span class="p">,</span>
+        <span class="n">num_datapoints_for_bn_update</span><span class="o">=</span><span class="n">num_datapoints_for_bn_update</span><span class="p">,</span>
         <span class="n">max_cols</span><span class="o">=</span><span class="n">checkpoint_dict</span><span class="p">[</span><span class="s2">&quot;max_cols&quot;</span><span class="p">],</span>
     <span class="p">)</span>
     <span class="n">_enable_tracking</span><span class="p">(</span><span class="n">tracker</span><span class="p">)</span>
