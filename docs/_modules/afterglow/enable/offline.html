@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>afterglow.enable.offline &mdash; afterglow 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/quick_start.html">Quickstart tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#problem-setup-and-dataset">Problem setup and dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/quick_start.html#training-a-model">Training a model</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Package Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/enable.html">afterglow.enable</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#module-afterglow.enable.base">afterglow.enable.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#module-afterglow.enable.offline">afterglow.enable.offline module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#module-afterglow.enable.online">afterglow.enable.online module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/enable.html#module-afterglow.enable">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/trackers.html">afterglow.trackers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers.trackers">afterglow.trackers.trackers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../modules/trackers.html#module-afterglow.trackers">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">afterglow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>afterglow.enable.offline</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for afterglow.enable.offline</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">parse</span> <span class="kn">import</span> <span class="n">parse</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">_enable_tracking</span><span class="p">,</span> <span class="n">_create_swag_buffers</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">validate_arguments</span><span class="p">,</span> <span class="n">StrictInt</span><span class="p">,</span> <span class="n">conint</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">..trackers</span> <span class="kn">import</span> <span class="n">SWAGTracker</span><span class="p">,</span> <span class="n">CheckpointTracker</span>
+
+
+<span class="n">_IntGreaterThanOne</span> <span class="o">=</span> <span class="n">conint</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_iter_from_filepath</span><span class="p">(</span><span class="n">filepath</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+    <span class="n">iter_str</span> <span class="o">=</span> <span class="n">parse</span><span class="p">(</span><span class="s2">&quot;iter_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">filepath</span><span class="o">.</span><span class="n">stem</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">iter_str</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="enable_swag_from_checkpoints"><a class="viewcode-back" href="../../../modules/enable.html#afterglow.enable.offline.enable_swag_from_checkpoints">[docs]</a><span class="nd">@validate_arguments</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pre&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;arbitrary_types_allowed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="k">def</span> <span class="nf">enable_swag_from_checkpoints</span><span class="p">(</span>
+    <span class="n">module</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">max_cols</span><span class="p">:</span> <span class="n">_IntGreaterThanOne</span><span class="p">,</span>
+    <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">checkpoint_pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;*.ckpt&quot;</span><span class="p">,</span>
+    <span class="n">checkpoint_sort_key</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">_iter_from_filepath</span><span class="p">,</span>
+    <span class="n">dataloader_for_batchnorm</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataLoader</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_bn_batches_per_sample</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Equips a model with SWAG-based uncertainty estimation by reconstructing</span>
+<span class="sd">    the training trajectory from a series of saved checkpoints. Useful if you</span>
+<span class="sd">    have non-SWAG-enabled checkpoints saved for an expensive-to-train model</span>
+<span class="sd">    that you want to try SWAG on.</span>
+
+<span class="sd">    Calling this on a model equips it with a :code:`trajectory_tracker` object which</span>
+<span class="sd">    provides SWAG-sampling methods.</span>
+<span class="sd">    Example usage:</span>
+<span class="sd">    ::</span>
+<span class="sd">        my_model = MyModel()</span>
+<span class="sd">        enable_swag_from_checkpoints(</span>
+<span class="sd">            my_model,</span>
+<span class="sd">            max_cols=10,</span>
+<span class="sd">            checkpoint_path=&quot;./checkpoints&quot;,</span>
+<span class="sd">            checkpoint_pattern=&quot;*.pt&quot;,</span>
+<span class="sd">            checkpoint_sort_key=lambda x: int(x[:len(&quot;.pt&quot;)]),</span>
+<span class="sd">        ) # assuming your checkpoints are of the form &quot;./checkpoints/&lt;epoch-num&gt;.pt&quot;</span>
+<span class="sd">        my_model.trajectory_tracker.predict_uncertainty(data)</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        module: The module to enable SWAG for.</span>
+<span class="sd">        max_cols: Number of checkpoints to use in calculating the SWAG covariance</span>
+<span class="sd">            matrix. Values between 10 and 20 are usually reasonable. See SWAG paper</span>
+<span class="sd">            for details.</span>
+<span class="sd">        checkpoint_dir: Directory where the checkpoints from the training run</span>
+<span class="sd">            you want to apply SWAG to are found.</span>
+<span class="sd">        checkpoint_pattern: A glob pattern that, when applied to :code:`checkpoint_dir`,</span>
+<span class="sd">            will select the checkpoints you want to include.</span>
+<span class="sd">        checkpoint_sort_key: Function mapping from checkpoint filenames to a number,</span>
+<span class="sd">            where the number can be used to order the checkpoints.</span>
+<span class="sd">        dataloader_for_batchnorm: if this is is provided, we update the model&#39;s</span>
+<span class="sd">            batchnorm running means and variances every time we sample a new set of</span>
+<span class="sd">            parameters using the data in the dataloader. This is slow but can improve</span>
+<span class="sd">            performance significantly. See SWAG paper, and</span>
+<span class="sd">            :code:`torch.optim.swa_utils.update_bn`. Note that the</span>
+<span class="sd">            assumptions made about what iterating over the dataloader returns are</span>
+<span class="sd">            the same as those in :code:`torch.optim.swa_utils.update_bn`: it&#39;s</span>
+<span class="sd">            assumed that iterating produces a sequence of (input_batch, label_batch)</span>
+<span class="sd">            tuples.</span>
+<span class="sd">        num_bn_batches_per_sample: Number of minibatches to use for the batchnorm</span>
+<span class="sd">            update. If :code:`None`, we use the whole dataset, as in the original SWAG</span>
+<span class="sd">            paper. However, as shown in the MiniSWAG paper, it&#39;s almost always</span>
+<span class="sd">            better to set this value to 1 (the default) and increase the number of</span>
+<span class="sd">            SWAG samples drawn.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tracker</span> <span class="o">=</span> <span class="n">SWAGTracker</span><span class="p">(</span>
+        <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
+        <span class="n">start_iteration</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">update_period_in_iters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">dataloader_for_batchnorm</span><span class="o">=</span><span class="n">dataloader_for_batchnorm</span><span class="p">,</span>
+        <span class="n">num_bn_batches_per_sample</span><span class="o">=</span><span class="n">num_bn_batches_per_sample</span><span class="p">,</span>
+        <span class="n">max_cols</span><span class="o">=</span><span class="n">max_cols</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_enable_tracking</span><span class="p">(</span>
+        <span class="n">tracker</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_create_swag_buffers</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">max_cols</span><span class="p">)</span>
+    <span class="n">_populate_uncertainty_buffers_from_checkpoints</span><span class="p">(</span>
+        <span class="n">module</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="p">,</span> <span class="n">checkpoint_pattern</span><span class="p">,</span> <span class="n">checkpoint_sort_key</span>
+    <span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_populate_uncertainty_buffers_from_checkpoints</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+    <span class="n">checkpoint_pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">checkpoint_sort_key</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">float</span><span class="p">],</span>
+<span class="p">):</span>
+    <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span>
+    <span class="n">checkpoints</span> <span class="o">=</span> <span class="n">checkpoint_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">checkpoint_pattern</span><span class="p">)</span>
+    <span class="n">checkpoints_in_order</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">checkpoints</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">checkpoint_sort_key</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">checkpoint</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">checkpoints_in_order</span><span class="p">):</span>
+        <span class="n">state_dict</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">trajectory_tracker</span><span class="o">.</span><span class="n">_update_tracked_state_dict</span><span class="p">(</span><span class="n">state_dict</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">trajectory_tracker</span><span class="o">.</span><span class="n">_update_uncertainty_buffers</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">trajectory_tracker</span><span class="o">.</span><span class="n">iterations</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="enable_checkpointing"><a class="viewcode-back" href="../../../modules/enable.html#afterglow.enable.offline.enable_checkpointing">[docs]</a><span class="nd">@validate_arguments</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pre&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;arbitrary_types_allowed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+<span class="k">def</span> <span class="nf">enable_checkpointing</span><span class="p">(</span>
+    <span class="n">module</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">start_iteration</span><span class="p">:</span> <span class="n">StrictInt</span><span class="p">,</span>
+    <span class="n">checkpoint_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span>
+    <span class="n">update_period_in_iters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StrictInt</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convenience function to save checkpoints during a run in a format</span>
+<span class="sd">    that will work easily with :code:`enable_swag_from_checkpoints`. If you use</span>
+<span class="sd">    this function for checkpointing, you can call :code:`enable_swag_from_checkpoints`</span>
+<span class="sd">    with :code:`checkpoint_pattern` and :code:`checkpoint_sort_key` left as the</span>
+<span class="sd">    defaults.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module: the module to enable checkpointing for</span>
+<span class="sd">        start_iteration: iteration at which to start saving checkpoints</span>
+<span class="sd">        update_period_in_iters: how often to save the parameters, in interations</span>
+<span class="sd">        checkpoint_dir: directory to save the checkpoints in. Need not exist.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tracker</span> <span class="o">=</span> <span class="n">CheckpointTracker</span><span class="p">(</span>
+        <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="p">,</span>
+        <span class="n">start_iteration</span><span class="o">=</span><span class="n">start_iteration</span><span class="p">,</span>
+        <span class="n">checkpoint_dir</span><span class="o">=</span><span class="n">checkpoint_dir</span><span class="p">,</span>
+        <span class="n">update_period_in_iters</span><span class="o">=</span><span class="n">update_period_in_iters</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_enable_tracking</span><span class="p">(</span><span class="n">tracker</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Francesco Farina, Lawrence Phillips.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
